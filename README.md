@@ -10,6 +10,7 @@ for 5.05
 - FTP
 - HEN: for fpkgs, also fixed problem where official sdk tools can't find process for debugging (need to change some bytes inside fake self header to work)
 - Loader: aka Bin loader. port 9020.
+- Linux loader
 - kdump: dump kernel to specified ip inside userland.js
 - Original: kernel exploit only
 
