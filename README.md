@@ -22,4 +22,4 @@ extract exploits directory to payload host directory.
 
 Payload sdk = https://github.com/aomsin2526/ps4-payload-sdk/tree/86276f8a8946af34170744832fc8e7afd1d58f7a
 
-export PS4SDK=<sdk root dir>
+export PS4SDK=sdk root dir
