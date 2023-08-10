@@ -16,7 +16,7 @@
 #define DT_HASH_SEGMENT		0xD61988
 
 extern char kpayload[];
-unsigned kpayload_size;
+extern unsigned kpayload_size;
 
 int payload_result = 0;
 
