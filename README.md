@@ -16,3 +16,8 @@ for 5.05
 
 Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.0RC1
 extract exploits directory to payload host directory.
+
+
+# Notes
+
+Payload sdk = https://github.com/aomsin2526/ps4-payload-sdk/tree/86276f8a8946af34170744832fc8e7afd1d58f7a
