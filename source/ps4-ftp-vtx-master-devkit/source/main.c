@@ -8,6 +8,7 @@
 #include "dump.h"
 
 int run;
+int sock;
 
 static void build_iovec(struct iovec** iov, int* iovlen, const char* name, const void* val, size_t len) {
 	int i;
@@ -38,7 +39,7 @@ static void build_iovec(struct iovec** iov, int* iovlen, const char* name, const
 	*iovlen = ++i;
 }
 
-static int mount_large_fs(const char* device, const char* mountpoint, const char* fstype, const char* mode, unsigned int flags) {
+static int mount_large_fs_(const char* device, const char* mountpoint, const char* fstype, const char* mode, unsigned int flags) {
 	struct iovec* iov = NULL;
 	int iovlen = 0;
 
@@ -60,10 +61,10 @@ static int mount_large_fs(const char* device, const char* mountpoint, const char
 
 void custom_MTRW(ftps4_client_info_t *client)
 {
-	if (mount_large_fs("/dev/da0x0.crypt", "/preinst",   "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
-	if (mount_large_fs("/dev/da0x1.crypt", "/preinst2",  "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
-	if (mount_large_fs("/dev/da0x4.crypt", "/system",    "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
-	if (mount_large_fs("/dev/da0x5.crypt", "/system_ex", "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
+	if (mount_large_fs_("/dev/da0x0.crypt", "/preinst",   "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
+	if (mount_large_fs_("/dev/da0x1.crypt", "/preinst2",  "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
+	if (mount_large_fs_("/dev/da0x4.crypt", "/system",    "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
+	if (mount_large_fs_("/dev/da0x5.crypt", "/system_ex", "exfatfs", "511", MNT_UPDATE) < 0) goto fail;
 
 	ftps4_ext_client_send_ctrl_msg(client, "200 Mount success." FTPS4_EOL);
 	return;

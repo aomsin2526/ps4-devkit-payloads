@@ -1,6 +1,6 @@
 #include "ps4.h"
 
-/*
+#if 0
 
 int* (*__error)();
 
@@ -51,4 +51,4 @@ void initSysUtil(void)
   RESOLVE(sysUtilHandle, sceSysUtilSendSystemNotificationWithText);
 }
 
-*/
+#endif

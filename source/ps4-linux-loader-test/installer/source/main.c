@@ -119,6 +119,27 @@ int usbthing()
 
     if (fkernel == NULL)
     {
+        fkernel = fopen("/mnt/usb3/bzImage", "r");
+        if (fkernel != NULL)
+            notify("Found bzImage from usb3.");
+    }
+
+    if (fkernel == NULL)
+    {
+        fkernel = fopen("/mnt/usb4/bzImage", "r");
+        if (fkernel != NULL)
+            notify("Found bzImage from usb4.");
+    }
+
+    if (fkernel == NULL)
+    {
+        fkernel = fopen("/data/bzImage", "r");
+        if (fkernel != NULL)
+            notify("Found bzImage from data.");
+    }
+
+    if (fkernel == NULL)
+    {
         fkernel = fopen("/user/system/boot/bzImage", "r");
         if (fkernel != NULL)
             notify("Found bzImage from /user/system/boot/.");
@@ -147,6 +168,27 @@ int usbthing()
         finitramfs = fopen("/mnt/usb2/initramfs.cpio.gz", "r");
         if (finitramfs != NULL)
             notify("Found initramfs.cpio.gz from usb2.");
+    }
+
+    if (finitramfs == NULL)
+    {
+        finitramfs = fopen("/mnt/usb3/initramfs.cpio.gz", "r");
+        if (finitramfs != NULL)
+            notify("Found initramfs.cpio.gz from usb3.");
+    }
+
+    if (finitramfs == NULL)
+    {
+        finitramfs = fopen("/mnt/usb4/initramfs.cpio.gz", "r");
+        if (finitramfs != NULL)
+            notify("Found initramfs.cpio.gz from usb4.");
+    }
+
+    if (finitramfs == NULL)
+    {
+        finitramfs = fopen("/data/initramfs.cpio.gz", "r");
+        if (finitramfs != NULL)
+            notify("Found initramfs.cpio.gz from data.");
     }
 
     if (finitramfs == NULL)

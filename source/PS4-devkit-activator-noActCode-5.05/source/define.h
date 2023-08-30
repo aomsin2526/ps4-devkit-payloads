@@ -1,9 +1,9 @@
-volatile int g_debugSocket;
+extern volatile int g_debugSocket;
 #define BUF_SIZE 1024
-char kprintfbuffer[BUF_SIZE];
-char bprintfbuffer[BUF_SIZE];
-volatile int bprintflength;
-volatile int (*sys_sendto)(void *td,void *uap);
+extern char kprintfbuffer[BUF_SIZE];
+extern char bprintfbuffer[BUF_SIZE];
+extern volatile int bprintflength;
+extern volatile int (*sys_sendto)(void *td,void *uap);
 
 #define printf(format, ...) \
 	do { \

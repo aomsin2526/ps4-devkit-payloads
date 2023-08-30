@@ -1,7 +1,7 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-int sock;
+extern int sock;
 
 void initDebugSocket(void);
 void closeDebugSocket(void);

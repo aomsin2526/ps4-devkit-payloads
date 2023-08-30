@@ -3,6 +3,14 @@
 #include "kern-resolver/kernel.h"
 
 //#define DEBUG_ENABLED 1
+//#define TESTKIT 1
+
+volatile int g_debugSocket;
+char kprintfbuffer[BUF_SIZE];
+char bprintfbuffer[BUF_SIZE];
+volatile int bprintflength;
+
+//volatile int (*sys_sendto)(void *td,void *uap);
 
 uint64_t __readmsr(unsigned long __register)
 {
@@ -71,7 +79,21 @@ int kernel_payload(void* uap)
     test = 69;
 #endif
 
-    kernel_base = ((uint8_t*)(__readmsr(0xC0000082) - 0x1C0));
+    uint32_t offset1 = 0x1C0;
+
+#if TESTKIT
+    uint32_t offset2 = 0x638626;
+    uint32_t offset3 = 0x638638;
+    
+    uint32_t offset4 = 0x6385f0;
+#else
+    uint32_t offset2 = 0x7cd316;
+    uint32_t offset3 = 0x7cd328;
+    
+    uint32_t offset4 = 0x7cd2e0;
+#endif
+    
+    kernel_base = ((uint8_t*)(__readmsr(0xC0000082) - offset1));
     
 #if DEBUG_ENABLED
     kprintf("hello from kernel!\n");
@@ -81,7 +103,7 @@ int kernel_payload(void* uap)
     u64 cr0 = write_protect_disable();
 
     {
-        uint8_t* ptr = (uint8_t*)(kernel_base + 0x7cd316);
+        uint8_t* ptr = (uint8_t*)(kernel_base + offset2);
 #if DEBUG_ENABLED
         kprintf("%x\n", ptr[1]);
 #endif
@@ -89,14 +111,14 @@ int kernel_payload(void* uap)
     }
 
     {
-        uint8_t* ptr = (uint8_t*)(kernel_base + 0x7cd328);
+        uint8_t* ptr = (uint8_t*)(kernel_base + offset3);
 #if DEBUG_ENABLED
         kprintf("%x\n", ptr[1]);
 #endif
         ptr[1] = 0x94; // 0x95
     }
 
-    uint32_t(*sceSblDevActSetStatus)(int) = (void*)(kernel_base + 0x7cd2e0);
+    uint32_t(*sceSblDevActSetStatus)(int) = (void*)(kernel_base + offset4);
 #if DEBUG_ENABLED
     kprintf("sceSblDevActSetStatus(0) = %u\n", sceSblDevActSetStatus(0));
 #else

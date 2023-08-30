@@ -123,6 +123,7 @@ static inline void patch_update(void)
 }
 
 int _main(struct thread *td) {
+
   int result;
 
   initKernel();	
@@ -145,7 +146,9 @@ int _main(struct thread *td) {
   result = !result ? 0 : errno;
   printfsocket("install_payload: %d\n", result);
 
-  patch_update();
+  //patch_update();
+
+#if 0
 
   initSysUtil();
 
@@ -153,6 +156,8 @@ int _main(struct thread *td) {
   sprintf(buf, "Welcome to PS4HEN");
 
   notify(buf);
+
+#endif
 
   printfsocket("Done.\n");
 

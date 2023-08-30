@@ -65,7 +65,7 @@ static inline void client_send_data_raw(ftps4_client_info_t *client, const void 
 	}
 }
 
-static int file_exists(const char *path)
+static int file_exists_(const char *path)
 {
 	struct stat s;
 	return (stat(path, &s) >= 0);
@@ -420,7 +420,7 @@ static void cmd_LIST_func(ftps4_client_info_t *client)
 		? 0
 		: sscanf(client->recv_cmd_args, "%[^\r\n\t]", list_path);
 
-	if (n > 0 && file_exists(list_path))
+	if (n > 0 && file_exists_(list_path))
 		list_cur_path = 0;
 
 	if (list_cur_path)
@@ -721,7 +721,7 @@ static void cmd_RNFR_func(ftps4_client_info_t *client)
 	gen_ftp_fullpath(client, from_path, sizeof(from_path));
 
 	/* Check if the file exists */
-	if (!file_exists(from_path)) {
+	if (!file_exists_(from_path)) {
 		client_send_ctrl_msg(client, "550 The file doesn't exist." FTPS4_EOL);
 		return;
 	}
