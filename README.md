@@ -19,7 +19,7 @@ t = testkit
 - kdump: dump kernel to specified ip inside userland.js
 - Original: kernel exploit only
 
-Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.0RC1
+Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.5
 extract exploits directory to payload host directory.
 
 
