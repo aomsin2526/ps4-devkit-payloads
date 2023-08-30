@@ -4,6 +4,11 @@ Useful payloads for PS4 devkit, It is mostly modified existing retail payloads.
 
 for 5.05
 
+
+d = devkit
+
+t = testkit
+
 # Payload list
 - Activate: RTC revert / reactPSPlus method, use this when possible. Persistent.
 - Activate (noActCode): for kit without activation token such as brand new, must be used together with HEN to launch apps. Not persistent.
