@@ -7,7 +7,7 @@
 #include "ftps4.h"
 #include "dump.h"
 
-#define DEBUG printfsocket
+#define DEBUG(...)
 #include "defines.h"
 
 #define UNUSED(x) (void)(x)
@@ -65,7 +65,7 @@ static inline void client_send_data_raw(ftps4_client_info_t *client, const void 
 	}
 }
 
-static int file_exists_(const char *path)
+static int file_existss(const char *path)
 {
 	struct stat s;
 	return (stat(path, &s) >= 0);
@@ -261,10 +261,8 @@ static char file_type_char(mode_t mode)
 	       S_ISLNK(mode)  ? 'l' : ' ';
 }
 
-#define O_DIRECTORY 0x00020000
-
 static int gen_list_format(char *out, int n, mode_t file_mode, unsigned long long file_size,
-	const struct tm file_tm, const char *file_name, const char *link_name, const struct tm cur_tm, int isDir)
+	const struct tm file_tm, const char *file_name, const char *link_name, const struct tm cur_tm)
 {
 	static const char num_to_month[][4] = {
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -282,16 +280,16 @@ static int gen_list_format(char *out, int n, mode_t file_mode, unsigned long lon
 
 #define LIST_FMT "%c%c%c%c%c%c%c%c%c%c 1 ps4 ps4 %llu %s %2d %s %s"
 #define LIST_ARGS \
-			isDir ? 'd' : file_type_char(file_mode), \
+			file_type_char(file_mode), \
 			file_mode & 0400 ? 'r' : '-', \
 			file_mode & 0200 ? 'w' : '-', \
-			file_mode & 0100 ? (isDir ? 's' : 'x') : (isDir ? 'S' : '-'), \
+			file_mode & 0100 ? (S_ISDIR(file_mode) ? 's' : 'x') : (S_ISDIR(file_mode) ? 'S' : '-'), \
 			file_mode & 040 ? 'r' : '-', \
 			file_mode & 020 ? 'w' : '-', \
-			file_mode & 010 ? (isDir ? 's' : 'x') : (isDir ? 'S' : '-'), \
+			file_mode & 010 ? (S_ISDIR(file_mode) ? 's' : 'x') : (S_ISDIR(file_mode) ? 'S' : '-'), \
 			file_mode & 04 ? 'r' : '-', \
 			file_mode & 02 ? 'w' : '-', \
-			file_mode & 01 ? (isDir ? 's' : 'x') : (isDir ? 'S' : '-'), \
+			file_mode & 01 ? (S_ISDIR(file_mode) ? 's' : 'x') : (S_ISDIR(file_mode) ? 'S' : '-'), \
 			file_size, \
 			num_to_month[file_tm.tm_mon%12], \
 			file_tm.tm_mday, \
@@ -320,16 +318,15 @@ static void send_LIST(ftps4_client_info_t *client, const char *path)
 	time_t cur_time;
 	struct tm tm, cur_tm;
 
-    DEBUG("path = %s\n", path);
-
-    dentbufsize = 8 * 1024 * 1024;
-   
-    if (dentbufsize == 0xffffffff){
+	if (stat(path, &st) < 0) {
 		client_send_ctrl_msg(client, "550 Invalid directory." FTPS4_EOL);
 		return;
 	}
 
-	dfd = open(path, O_RDONLY | O_DIRECTORY, 0);
+	dentbufsize = st.st_blksize;
+	DEBUG("dent buffer size = %lx\n", dentbufsize);
+
+	dfd = open(path, O_RDONLY, 0);
 	if (dfd < 0) {
 		client_send_ctrl_msg(client, "550 Invalid directory." FTPS4_EOL);
 		return;
@@ -354,7 +351,7 @@ static void send_LIST(ftps4_client_info_t *client, const char *path)
 				char full_path[PATH_MAX];
 				snprintf(full_path, sizeof(full_path), "%s/%s", path, dent->d_name);
 
-				err = stat(full_path, (struct stat*)&st);
+				err = stat(full_path, &st);
 
 				if (err == 0) {
 					char link_path[PATH_MAX];
@@ -367,18 +364,6 @@ static void send_LIST(ftps4_client_info_t *client, const char *path)
 						}
 					}
 
-                    int isDir = 0;
-
-                    {
-                        int fd = open(full_path, O_RDONLY | O_DIRECTORY, 0);
-
-                        if (fd >= 0)
-                        {
-                            isDir = 1;
-                            close(fd);
-                        }
-                    }
-
 					gmtime_s(&st.st_ctim.tv_sec, &tm);
 					gen_list_format(buffer, sizeof(buffer),
 						st.st_mode,
@@ -386,8 +371,7 @@ static void send_LIST(ftps4_client_info_t *client, const char *path)
 						tm,
 						dent->d_name,
 						S_ISLNK(st.st_mode) && link_path[0] != '\0' ? link_path : NULL,
-						cur_tm,
-                        isDir);
+						cur_tm);
 
 					client_send_data_msg(client, buffer);
 					memset(buffer, 0, sizeof(buffer));
@@ -420,7 +404,7 @@ static void cmd_LIST_func(ftps4_client_info_t *client)
 		? 0
 		: sscanf(client->recv_cmd_args, "%[^\r\n\t]", list_path);
 
-	if (n > 0 && file_exists_(list_path))
+	if (n > 0 && file_existss(list_path))
 		list_cur_path = 0;
 
 	if (list_cur_path)
@@ -721,7 +705,7 @@ static void cmd_RNFR_func(ftps4_client_info_t *client)
 	gen_ftp_fullpath(client, from_path, sizeof(from_path));
 
 	/* Check if the file exists */
-	if (!file_exists_(from_path)) {
+	if (!file_existss(from_path)) {
 		client_send_ctrl_msg(client, "550 The file doesn't exist." FTPS4_EOL);
 		return;
 	}
