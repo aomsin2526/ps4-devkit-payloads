@@ -12,7 +12,7 @@ t = testkit
 # Payload list
 - Activate: RTC revert / reactPSPlus method, use this when possible. Persistent.
 - Activate (noActCode): for kit without activation token such as brand new, must be used together with HEN to launch apps. Not persistent.
-- FTP
+- FTP: Bugs are now fixed such as SELF dumping and stat.
 - HEN: for fpkgs, also fixed problem where official sdk tools can't find process for debugging (need to change some bytes inside fake self header to work)
 - Loader: aka Bin loader. port 9020.
 - Linux loader
