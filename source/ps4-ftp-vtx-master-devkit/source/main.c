@@ -191,6 +191,21 @@ int kpayload(struct thread *td){
 	uint64_t *sceProcCap = (uint64_t *)(((char *)td_ucred) + 104);
 	*sceProcCap = 0xffffffffffffffff; // Sce Process
 
+    // enable mmap of all SELF 5.05
+	*(uint8_t*)(kernel_base + 0x18320) = 0xB0;
+	*(uint8_t*)(kernel_base + 0x18321) = 0x01;
+	*(uint8_t*)(kernel_base + 0x18322) = 0xC3;
+
+	*(uint8_t*)(kernel_base + 0x18330) = 0xB0;
+	*(uint8_t*)(kernel_base + 0x18331) = 0x01;
+	*(uint8_t*)(kernel_base + 0x18332) = 0xC3;
+
+	*(uint8_t*)(kernel_base + 0x1995df) = 0x31;
+	*(uint8_t*)(kernel_base + 0x1995e0) = 0xC0;
+	*(uint8_t*)(kernel_base + 0x1995e1) = 0x90;
+	*(uint8_t*)(kernel_base + 0x1995e2) = 0x90;
+	*(uint8_t*)(kernel_base + 0x1995e3) = 0x90;
+
 	// Restore write protection
 	writeCr0(cr0);
 
