@@ -18,6 +18,7 @@ t = testkit
 - Linux loader
 - kdump: dump kernel to specified ip inside userland.js
 - Original: kernel exploit only
+- Enable browser: Enable browser for lower firmware
 
 Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.5
 extract exploits directory to payload host directory.
