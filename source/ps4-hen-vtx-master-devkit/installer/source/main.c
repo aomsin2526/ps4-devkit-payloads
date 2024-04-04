@@ -92,6 +92,17 @@ int install_payload(struct thread *td, struct install_payload_args* args)
   *(uint32_t *)(kernel_base + 0x64B2B0) = 0x90C301B0;
   *(uint32_t *)(kernel_base + 0x64B2D0) = 0x90C301B0;*/
 
+  // spoof fw
+
+#if 0
+
+  uint32_t spoof_version = 0x07518021;
+
+  *(uint32_t *)(kernel_base + 0x16e6d00) = spoof_version;
+  *(uint32_t *)(kernel_base + 0x1ced2d0) = spoof_version;
+
+#endif
+
   // install kpayload
   memset(payload_buffer, 0, PAGE_SIZE);
   memcpy(payload_buffer, payload_data, payload_size);
