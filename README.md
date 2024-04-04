@@ -14,7 +14,7 @@ t = testkit
 - Activate (noActCode): for kit without activation token such as brand new, must be used together with HEN to launch apps. Not persistent.
 - FTP: Bugs are now fixed such as SELF dumping and stat.
 - HEN: for fpkgs, also fixed problem where official sdk tools can't find process for debugging (need to change some bytes inside fake self header to work)
-- HEN Spoof: HEN with firmware version spoofed, for backports fpkg (may broke something else, not sure)
+- HEN Spoof: HEN with firmware version spoofed, for backports fpkg (may broke something else, not sure), more debug settings
 - Loader: aka Bin loader. port 9020.
 - Linux loader
 - kdump: dump kernel to specified ip inside userland.js

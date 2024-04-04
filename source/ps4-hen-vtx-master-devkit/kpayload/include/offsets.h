@@ -43,14 +43,13 @@
 #define AesCbcCfb128Decrypt_addr        0x4a43f0
 #define Sha256Hmac_addr                 0x3900d0
 
-// skip
 // Patch
-#define proc_rwmem_addr                 0x30D150
-#define vmspace_acquire_ref_addr        0x19EF90
-#define vmspace_free_addr               0x19EDC0
-#define vm_map_lock_read_addr           0x19F140
-#define vm_map_unlock_read_addr         0x19F190
-#define vm_map_lookup_entry_addr        0x19F760
+#define proc_rwmem_addr                 0x3dd6b0
+#define vmspace_acquire_ref_addr        0x212e30
+#define vmspace_free_addr               0x212c60
+#define vm_map_lock_read_addr           0x212fe0
+#define vm_map_unlock_read_addr         0x213030
+#define vm_map_lookup_entry_addr        0x213600
 
 // Fself hooks
 #define sceSblAuthMgrIsLoadable2_hook                             0x7d3091
@@ -66,28 +65,27 @@
 #define mountpfs__sceSblPfsSetKeys_hook1                          0x8433e5
 #define mountpfs__sceSblPfsSetKeys_hook2                          0x843614
 
-// skip
 // SceShellCore patches
 
 // call sceKernelIsGenuineCEX
-#define sceKernelIsGenuineCEX_patch1    0x16D05B 
-#define sceKernelIsGenuineCEX_patch2    0x79980B
-#define sceKernelIsGenuineCEX_patch3    0x7E5A13
-#define sceKernelIsGenuineCEX_patch4    0x94715B
+#define sceKernelIsGenuineCEX_patch1    0x1755ab
+#define sceKernelIsGenuineCEX_patch2    0x7a0b9b
+#define sceKernelIsGenuineCEX_patch3    0x7ecda3
+#define sceKernelIsGenuineCEX_patch4    0x951a0b
 
 // call nidf_libSceDipsw
-#define nidf_libSceDipsw_patch1         0x16D087
-#define nidf_libSceDipsw_patch2         0x23747B
-#define nidf_libSceDipsw_patch3         0x799837
-#define nidf_libSceDipsw_patch4         0x947187
+#define nidf_libSceDipsw_patch1         0x1755d7
+#define nidf_libSceDipsw_patch2         0x23cddb
+#define nidf_libSceDipsw_patch3         0x7a0bc7
+#define nidf_libSceDipsw_patch4         0x951a37
 
 // enable fpkg
-#define enable_fpkg_patch               0x3E0602
+//#define enable_fpkg_patch               0x3E0602
  
 // debug pkg free string
-#define fake_free_patch                 0xEA96A7
+//#define fake_free_patch                 0xEA96A7
 
 // make pkgs installer working with external hdd
-#define pkg_installer_patch		0x9312A1
+//#define pkg_installer_patch		0x9312A1
 
 #endif

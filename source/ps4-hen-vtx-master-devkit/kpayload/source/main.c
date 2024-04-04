@@ -132,7 +132,7 @@ PAYLOAD_CODE int my_entrypoint()
   resolve_kdlsym();
   install_fself_hooks();
   install_fpkg_hooks();
-  //return shellcore_fpkg_patch();
+  shellcore_fpkg_patch();
     return 22;
 }
 

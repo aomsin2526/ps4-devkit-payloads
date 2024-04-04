@@ -211,6 +211,8 @@ PAYLOAD_CODE int shellcore_fpkg_patch(void)
     }
   }
 
+/*
+
   // enable fpkg for patches
   ret = proc_write_mem(ssc, (void *)(text_seg_base + enable_fpkg_patch), 8, "\xE9\x96\x00\x00\x00\x90\x90\x90", &n);
   if (ret) {
@@ -228,6 +230,8 @@ PAYLOAD_CODE int shellcore_fpkg_patch(void)
   if (ret) {
     goto error;
   }
+
+*/
 
 error:
   if (entries) {
