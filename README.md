@@ -20,6 +20,7 @@ t = testkit
 - kdump: dump kernel to specified ip inside userland.js
 - Original: kernel exploit only
 - Enable browser: Enable browser for lower firmware
+- UART Enabler: Enable UART port. You can use the "Mini" USB port marked "DEV" at the back to get full UART access without soldering. Install correct driver, Run payload, turn it off and on again (Not reboot!). See: https://www.psdevwiki.com/ps4/Devkit_USB_Uart
 
 Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.5
 extract exploits directory to payload host directory.
