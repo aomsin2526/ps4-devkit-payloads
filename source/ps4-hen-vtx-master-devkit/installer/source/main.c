@@ -76,15 +76,16 @@ int install_payload(struct thread *td, struct install_payload_args* args)
   writeCr0(cr0 & ~X86_CR0_WP);
 
   // debug settings patches 5.05
-  /**(char *)(kernel_base + 0x1CD0686) |= 0x14;
-  *(char *)(kernel_base + 0x1CD06A9) |= 3;
-  *(char *)(kernel_base + 0x1CD06AA) |= 1;
-  *(char *)(kernel_base + 0x1CD06C8) |= 1;
+  *(char *)(kernel_base + 0x1F1B806) |= 0x14;
+  *(char *)(kernel_base + 0x1F1B829) |= 3;
+  *(char *)(kernel_base + 0x1F1B82A) |= 1;
+  *(char *)(kernel_base + 0x1F1B848) |= 1;
 
   // debug menu error patches 5.05
-  *(uint32_t *)(kernel_base + 0x4F9048) = 0;
-  *(uint32_t *)(kernel_base + 0x4FA15C) = 0;
+  *(uint32_t *)(kernel_base + 0x660f58) = 0;
+  *(uint32_t *)(kernel_base + 0x66206c) = 0;
 
+/*
   // flatz disable pfs signature check 5.05
   *(uint32_t *)(kernel_base + 0x6A2700) = 0x90C3C031;
 
@@ -96,7 +97,7 @@ int install_payload(struct thread *td, struct install_payload_args* args)
 
 #if 0
 
-  uint32_t spoof_version = 0x07518021;
+  uint32_t spoof_version = 0x99999999;
 
   *(uint32_t *)(kernel_base + 0x16e6d00) = spoof_version;
   *(uint32_t *)(kernel_base + 0x1ced2d0) = spoof_version;
