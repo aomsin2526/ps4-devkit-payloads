@@ -4,7 +4,7 @@ Useful payloads for PS4 devkit, It is mostly modified existing retail payloads. 
 Thanks z80 for his devkit ported kernel exploit code.
 
 
-for 5.05
+for 5.05/9.00 (testkit only)
 
 
 d = devkit
@@ -27,6 +27,7 @@ t = testkit
 Recommended payload host: https://github.com/Al-Azif/ps4-exploit-host/releases/tag/v0.4.5
 extract exploits directory to payload host directory.
 
+9.00 HEN sources see: https://github.com/aomsin2526/ps4-hen-vtx
 
 # Notes
 
